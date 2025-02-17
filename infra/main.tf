@@ -63,3 +63,7 @@ resource "aws_key_pair" "chaveSSH" {
   key_name   = var.chave                # DEV Dont need to pass the value name directly, but reference the created one.
   public_key = file("${var.chave}.pub") #file("IaC-DEV") Dont need to pass the value name directly, but reference the created one.
 }
+
+output "IP_publico" {
+  value = aws_instance.app_server.public_ip
+}

@@ -14,10 +14,16 @@
         name:
           - django
           - djangorestframework
+    
+    - name: Verificando se o projeto já existe
+      stat:
+        path: /home/ubuntu/papp/setup/settings.py
+      register: projeto_iniciado
 
     - name: Iniciando o projeto
-      shell:
-        '. /home/ubuntu/papp/venv/bin/activate; django-admin startproject setup /home/ubuntu/papp'
+      shell: '. /home/ubuntu/papp/venv/bin/activate; django-admin startproject setup /home/ubuntu/papp'
+      when: not projeto_iniciado.stat.exists  
+        
       ignore_errors: yes
       args:
         executable: /bin/bash       

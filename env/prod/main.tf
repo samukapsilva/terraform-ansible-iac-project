@@ -1,10 +1,10 @@
-module "aws-dev" {
+module "aws-prod" {
   source     = "../../infra"
   instancia  = "t2.micro"
   regiao_aws = "us-west-2"
-  chave      = "IaC-DEV"
+  chave      = "IaC-PROD"
 }
 
 output "IP" {
-  value = module.aws-dev.IP_publico
+  value = module.aws-prod.IP_publico
 }
