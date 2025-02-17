@@ -10,13 +10,14 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-west-2"
+  profile = "default"
+  region  = var.regiao_aws #"us-west-2" does not need to pass the name, but reference the variable created in the variables folder
 }
 
 resource "aws_instance" "app_server" {
   ami           = "ami-03d5c68bab01f3496"
-  instance_type = "t2.micro"
-  key_name      = "samukapcrypto-iac-key"
+  instance_type = var.instancia #"t2.micro" | dont need to pass the name, but reference the variable created in the variables folder
+  key_name      = var.chave     #"samukapcrypto-iac-key" | dont need to pass the name, but reference the variable created in the variables folder
   /*
   user_data = <<-EOF
                  #!/bin/bash
@@ -59,6 +60,6 @@ resource "aws_instance" "app_server" {
 }
 
 resource "aws_key_pair" "chaveSSH" {
-  key_name   = DEV
-  public_key = file("IaC-DEV")
+  key_name   = var.chave                # DEV Dont need to pass the value name directly, but reference the created one.
+  public_key = file("${var.chave}.pub") #file("IaC-DEV") Dont need to pass the value name directly, but reference the created one.
 }
