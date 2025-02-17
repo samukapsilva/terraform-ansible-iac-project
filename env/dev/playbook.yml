@@ -1,0 +1,30 @@
+- hosts: terraform-ansible
+  tasks:
+    - name: Instalando o python3 e o virtualenv
+      apt:
+        pkg:
+        - python3
+        - virtualenv
+        update_cache: yes
+      become: yes
+
+    - name: Instalando dependencias com pip (Django e Django Rest)
+      pip:
+        virtualenv: /home/ubuntu/papp/venv
+        name:
+          - django
+          - djangorestframework
+
+    - name: Iniciando o projeto
+      shell:
+        '. /home/ubuntu/papp/venv/bin/activate; django-admin startproject setup /home/ubuntu/papp'
+      ignore_errors: yes
+      args:
+        executable: /bin/bash       
+
+    - name: Alterando o hosts do settings
+      lineinfile:  
+        path: /home/ubuntu/papp/setup/settings.py
+        regex: 'ALLOWED_HOSTS'
+        line: 'ALLOWED_HOSTS = ["*"]'
+        backrefs: yes
