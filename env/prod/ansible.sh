@@ -1,3 +1,4 @@
+#!/bin/bash
 cd /home/ubuntu
 curl “https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 sudo python3 get-pip.py
@@ -44,4 +45,4 @@ tee -a playbook.yml > /dev/null <<EOT
       shell: '. /home/ubuntu/paap/venv/bin/activate; nohup python /home/ubuntu/papp/manage.py runserver 0.0.0.0:8000 &'
 EOT
 
-
+ansible-playbook playbook.yml 
